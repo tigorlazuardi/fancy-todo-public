@@ -17,6 +17,6 @@ const TodoSchema = new Schema({
   owner: Schema.Types.ObjectId
 }, { timestamps: true })
 
-const Todo = mongoose.model('Todo', TodoSchema)
+const Todo = mongoose.model('Todos', TodoSchema)
 
 module.exports = Todo
