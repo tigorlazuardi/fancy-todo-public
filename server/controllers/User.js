@@ -1,4 +1,3 @@
-
 const User = require('../models/User');
 const { createToken } = require('../helpers/jwt')
 const { compare } = require('../helpers/bcryptjs')

@@ -1,5 +1,6 @@
 const Project = require('../models/Project'),
-    Todo = require('../models/Todo')
+    Todo = require('../models/Todo'),
+    mongoose = require('mongoose')
 
 class ProjectController {
     static create(req, res, next) {
@@ -13,6 +14,14 @@ class ProjectController {
     };
 
     static read(req, res, next) {
+        const id = req.decode.id
+        Project.find({ members: mongoose.Types.ObjectId(id) })
+            .then((Projects) => {
+                res.status(200).json(Projects)
+            }).catch(next);
+    }
+
+    static readOne(req, res, next) {
         const projectId = req.params.projectId
         Project.findById(projectId)
             .populate('Todos')
@@ -45,7 +54,7 @@ class ProjectController {
         const projectId = req.params.projectId
         const userId = req.decode.id
         const { title, description } = req.body
-        Todo.create({ title, description, owner: userId })
+        Todo.create({ title, description, owner: userId, inProject: projectId })
             .then((Todo) => {
                 return Project.findByIdAndUpdate(projectId, { $push: { Todos: Todo.id } }, { new: true })
                     .populate('Todos')

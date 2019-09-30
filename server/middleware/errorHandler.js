@@ -21,7 +21,7 @@ module.exports = (err, req, res, next) => {
             break;
         case 'JsonWebTokenError':
             status = 401
-            message = err.message
+            message = "You are not logged in or your session expired. Please relogin"
             break;
         case 'NotFound':
             status = 404

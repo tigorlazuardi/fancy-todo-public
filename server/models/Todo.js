@@ -14,7 +14,8 @@ const TodoSchema = new Schema({
     "type": "Boolean",
     default: false
   },
-  owner: Schema.Types.ObjectId
+  owner: Schema.Types.ObjectId,
+  inProject: { type: Schema.Types.ObjectId, default: null }
 }, { timestamps: true })
 
 const Todo = mongoose.model('Todos', TodoSchema)

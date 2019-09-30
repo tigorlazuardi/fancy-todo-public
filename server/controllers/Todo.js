@@ -14,7 +14,7 @@ class TodoController {
 
     static read(req, res, next) {
         const id = req.decode.id
-        Todo.find({ owner: id })
+        Todo.find({ owner: id, inProject: null })
             .then((Todos) => {
                 res.status(200).json(Todos)
             })
