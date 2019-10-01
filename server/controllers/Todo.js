@@ -42,7 +42,7 @@ class TodoController {
         const todoId = req.params.todoId
         Todo.findByIdAndDelete(todoId)
             .then(() => {
-                res.status(200).json("Deleted")
+                res.status(200).json(todoId)
             })
             .catch(next);
     };
