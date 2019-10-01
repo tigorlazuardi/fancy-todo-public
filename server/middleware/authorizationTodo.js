@@ -2,7 +2,7 @@ const Todo = require('../models/Todo')
 
 module.exports = (req, res, next) => {
     const todoId = req.params.todoId
-    const userId = req.decode.Id
+    const userId = req.decode.id
     Todo.findById(todoId)
         .then((Todo) => {
             if (Todo) {

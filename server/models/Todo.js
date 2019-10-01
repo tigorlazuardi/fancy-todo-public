@@ -14,6 +14,7 @@ const TodoSchema = new Schema({
     "type": "Boolean",
     default: false
   },
+  dueDate: { type: Date, required: [true, "Due Date must be set"] },
   owner: Schema.Types.ObjectId,
   inProject: { type: Schema.Types.ObjectId, default: null }
 }, { timestamps: true })

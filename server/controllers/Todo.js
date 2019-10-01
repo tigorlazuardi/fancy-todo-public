@@ -4,8 +4,8 @@ const Todo = require('../models/Todo');
 class TodoController {
     static create(req, res, next) {
         const id = req.decode.id
-        const { title, description } = req.body
-        Todo.create({ title, description, owner: id })
+        const { title, description, dueDate } = req.body
+        Todo.create({ title, description, owner: id, dueDate })
             .then((Todo) => {
                 res.status(201).json(Todo)
             })
@@ -22,25 +22,25 @@ class TodoController {
     };
 
     static readOne(req, res, next) {
-        const id = req.params.id
-        Todo.findById(id)
+        const todoId = req.params.todoId
+        Todo.findById(todoId)
             .then((Todo) => {
                 res.status(200).json(Todo)
             }).catch(next);
     }
 
     static update(req, res, next) {
-        const id = req.params.id
-        const { title, description, status } = req.body
-        Todo.findByIdAndUpdate(id, { $set: { title, description, status } }, { runValidators: true, new: true })
+        const todoId = req.params.todoId
+        const { title, description, status, dueDate } = req.body
+        Todo.findByIdAndUpdate(todoId, { $set: { title, description, status, dueDate } }, { runValidators: true, new: true })
             .then((Todo) => {
                 res.status(200).json(Todo)
             }).catch(next);
     }
 
     static delete(req, res, next) {
-        const id = req.params.id
-        Todo.findByIdAndDelete(id)
+        const todoId = req.params.todoId
+        Todo.findByIdAndDelete(todoId)
             .then(() => {
                 res.status(200).json("Deleted")
             })
@@ -48,8 +48,8 @@ class TodoController {
     };
 
     static patch(req, res, next) {
-        const id = req.params.id
-        Todo.findByIdAndUpdate(id, { $set: { status: req.body.status } }, { new: true })
+        const todoId = req.params.todoId
+        Todo.findByIdAndUpdate(todoId, { $set: { status: req.body.status } }, { new: true })
             .then((Todo) => {
                 res.status(200).json(Todo)
             }).catch(next);
