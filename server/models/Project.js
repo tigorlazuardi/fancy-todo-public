@@ -17,7 +17,7 @@ const ProjectSchema = new Schema({
   owner: Schema.Types.ObjectId
 }, { timestamps: true })
 
-ProjectSchema.post('save', function (next) {
+ProjectSchema.pre('save', function (next) {
   ProjectSchema.members.push(ProjectSchema.owner)
   next()
 })

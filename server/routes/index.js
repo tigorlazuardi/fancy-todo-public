@@ -13,4 +13,8 @@ Router.use('/users', users)
 Router.use('/todos', Todo)
 Router.use('/projects', Project)
 
+Router.use('/*', (req, res, next) => {
+    res.status(404).json("404: No such API route found.")
+})
+
 module.exports = Router;
