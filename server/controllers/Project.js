@@ -32,7 +32,7 @@ class ProjectController {
             .catch(next);
     };
 
-    static update(req, res, next) {
+    static patch(req, res, next) {
         const projectId = req.params.projectId
         const { name } = req.body
         Project.findByIdAndUpdate(projectId, { $set: { name } }, { runValidators: true, new: true })
@@ -44,11 +44,39 @@ class ProjectController {
     static delete(req, res, next) {
         const projectId = req.params.projectId
         Project.findByIdAndDelete(projectId)
-            .then(() => {
-                res.status(200).json("Project Deleted")
-            })
+            .then(() => { res.status(200).json("Project Deleted") })
             .catch(next);
     };
+
+    static join(req, res, next) {
+        const projectId = req.params.projectId
+        const userId = req.decode.id
+        Project.findById(projectId)
+            .then((Project) => {
+                if (Project) {
+                    if (Project.members.includes(userId)) {
+                        next({ status: 400, message: "You have already joined this project" })
+                    } else {
+                        Project.findByIdAndUpdate(projectId, { $push: { members: userId } }, { new: true })
+                            .populate('Todos')
+                            .populate('members', '-password')
+                    }
+                } else {
+                    next({ status: 404, message: "Project not found" })
+                }
+            })
+            .then((Project) => res.status(200).json(Project))
+            .catch(next);
+    }
+    static leave(req, res, next) {
+        const projectId = req.params.projectId
+        const userId = req.decode.id
+        Project.findByIdAndUpdate(projectId, { $pull: { members: userId } }, { new: true })
+            .populate('Todos')
+            .populate('members', '-password')
+            .then((Project) => res.status(200).json(Project))
+            .catch(next);
+    }
 
     static addTodo(req, res, next) {
         const projectId = req.params.projectId
@@ -56,7 +84,7 @@ class ProjectController {
         const { title, description } = req.body
         Todo.create({ title, description, owner: userId, inProject: projectId })
             .then((Todo) => {
-                return Project.findByIdAndUpdate(projectId, { $push: { Todos: Todo.id } }, { new: true })
+                return Project.findByIdAndUpdate(projectId, { $push: { todos: Todo.id } }, { new: true })
                     .populate('Todos')
                     .populate('members', '-password')
             })
@@ -67,7 +95,7 @@ class ProjectController {
     static removeTodo(req, res, next) {
         const { projectId, todoId } = req.params
         let data
-        Project.findByIdAndUpdate(projectId, { $pull: { Todos: todoId } }, { new: true })
+        Project.findByIdAndUpdate(projectId, { $pull: { todos: todoId } }, { new: true })
             .populate('Todos')
             .populate('members', '-password')
             .then((Project) => {

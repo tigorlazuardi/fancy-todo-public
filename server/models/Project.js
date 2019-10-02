@@ -10,7 +10,7 @@ const ProjectSchema = new Schema({
     "type": [Schema.Types.ObjectId],
     ref: "Users"
   },
-  "Todos": {
+  "todos": {
     "type": [Schema.Types.ObjectId],
     ref: "Todos"
   },
@@ -18,7 +18,7 @@ const ProjectSchema = new Schema({
 }, { timestamps: true })
 
 ProjectSchema.pre('save', function (next) {
-  ProjectSchema.members.push(ProjectSchema.owner)
+  this.members.push(this.owner)
   next()
 })
 

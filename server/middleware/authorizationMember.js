@@ -6,7 +6,8 @@ module.exports = (req, res, next) => {
     Project.findById(projectId)
         .then((Project) => {
             if (Project) {
-                if (Project.members.include(userId)) {
+                console.log(Project)
+                if (Project.members.includes(userId)) {
                     next()
                 } else {
                     let err = new Error('You are not a member of this Project')

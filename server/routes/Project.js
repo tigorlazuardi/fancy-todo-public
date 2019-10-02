@@ -7,23 +7,22 @@ const Router = require('express').Router(),
 Router.use(authentication)
 Router.post('/', ProjectController.create)
 Router.get('/', ProjectController.read)
+Router.get('/join/:projectId', ProjectController.join)
+
 
 // ! Members Exclusive
-
-Router.use('/:id', authorizationMember)
-
 // * Project Owner Only
 
-Router.use('/:id/*', authorizationProject)
-Router.put('/:id/update', ProjectController.update)
-Router.delete('/:id/delete', ProjectController.delete)
+Router.patch('/update/:projectId/', authorizationMember, authorizationProject, ProjectController.patch)
+Router.delete('/delete/:projectId/', authorizationMember, authorizationProject, ProjectController.delete)
+Router.delete('/project/:projectId/:todoId', authorizationMember, authorizationProject, ProjectController.removeTodo)
+
 
 // * All members
 
-Router.get('/:id', ProjectController.readOne)
-Router.post('/:id', ProjectController.addTodo)
-Router.delete('/:id', ProjectController.removeTodo)
-
+Router.get('/leave/:projectId/', authorizationMember, ProjectController.leave)
+Router.get('/project/:projectId', authorizationMember, ProjectController.readOne)
+Router.post('/project/:projectId', authorizationMember, ProjectController.addTodo)
 
 
 module.exports = Router;
