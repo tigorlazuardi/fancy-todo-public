@@ -7,8 +7,8 @@ class ProjectController {
         const id = req.decode.id
         const { name } = req.body
         Project.create({ name, owner: id })
-            .then((Project) => {
-                res.status(201).json(Project)
+            .then((project) => {
+                res.status(201).json(project)
             })
             .catch(next);
     };
@@ -16,18 +16,18 @@ class ProjectController {
     static read(req, res, next) {
         const id = req.decode.id
         Project.find({ members: mongoose.Types.ObjectId(id) })
-            .then((Projects) => {
-                res.status(200).json(Projects)
+            .then((projects) => {
+                res.status(200).json(projects)
             }).catch(next);
     }
 
     static readOne(req, res, next) {
         const projectId = req.params.projectId
         Project.findById(projectId)
-            .populate('Todos')
+            .populate('todos')
             .populate('members', '-password')
-            .then((Project) => {
-                res.status(200).json(Project)
+            .then((project) => {
+                res.status(200).json(project)
             })
             .catch(next);
     };
@@ -36,8 +36,8 @@ class ProjectController {
         const projectId = req.params.projectId
         const { name } = req.body
         Project.findByIdAndUpdate(projectId, { $set: { name } }, { runValidators: true, new: true })
-            .then((Project) => {
-                res.status(200).json(Project)
+            .then((project) => {
+                res.status(200).json(project)
             }).catch(next);
     }
 
@@ -52,20 +52,26 @@ class ProjectController {
         const projectId = req.params.projectId
         const userId = req.decode.id
         Project.findById(projectId)
-            .then((Project) => {
-                if (Project) {
-                    if (Project.members.includes(userId)) {
-                        next({ status: 400, message: "You have already joined this project" })
+            .then((project) => {
+                if (project) {
+                    if (project.members.includes(userId)) {
+                        let err = new Error('You have already joined this project')
+                        err.status = 400
+                        throw err
                     } else {
-                        Project.findByIdAndUpdate(projectId, { $push: { members: userId } }, { new: true })
-                            .populate('Todos')
+                        return Project.findByIdAndUpdate(projectId, { $push: { members: userId } }, { new: true })
+                            .populate('todos')
                             .populate('members', '-password')
                     }
                 } else {
-                    next({ status: 404, message: "Project not found" })
+                    let err = new Error("Project not found")
+                    err.status = 404
+                    throw err
                 }
             })
-            .then((Project) => res.status(200).json(Project))
+            .then((project) => {
+                res.status(200).json(project)
+            })
             .catch(next);
     }
     static leave(req, res, next) {
@@ -74,7 +80,7 @@ class ProjectController {
         Project.findByIdAndUpdate(projectId, { $pull: { members: userId } }, { new: true })
             .populate('Todos')
             .populate('members', '-password')
-            .then((Project) => res.status(200).json(Project))
+            .then((project) => res.status(200).json(project))
             .catch(next);
     }
 
@@ -88,7 +94,7 @@ class ProjectController {
                     .populate('Todos')
                     .populate('members', '-password')
             })
-            .then((Project) => res.status(201).json(Project))
+            .then((project) => res.status(201).json(project))
             .catch(next);
     }
 

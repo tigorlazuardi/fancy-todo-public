@@ -7,14 +7,14 @@ const ProjectSchema = new Schema({
     required: [true, "Project Name required"]
   },
   "members": {
-    "type": [Schema.Types.ObjectId],
+    "type": [{ type: Schema.Types.ObjectId, ref: "Users" }],
     ref: "Users"
   },
   "todos": {
-    "type": [Schema.Types.ObjectId],
+    "type": [{ type: Schema.Types.ObjectId, ref: "Todos" }],
     ref: "Todos"
   },
-  owner: Schema.Types.ObjectId
+  owner: { type: Schema.Types.ObjectId, ref: "Users" }
 }, { timestamps: true })
 
 ProjectSchema.pre('save', function (next) {
