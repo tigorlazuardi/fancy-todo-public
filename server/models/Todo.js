@@ -16,7 +16,7 @@ const TodoSchema = new Schema({
   },
   dueDate: { type: Date, required: [true, "Due Date must be set"] },
   owner: Schema.Types.ObjectId,
-  inProject: { type: Schema.Types.ObjectId, default: null }
+  inProject: { type: Schema.Types.ObjectId, ref: "Projects", default: null }
 }, { timestamps: true })
 
 const Todo = mongoose.model('Todos', TodoSchema)

@@ -8,11 +8,9 @@ const ProjectSchema = new Schema({
   },
   "members": {
     "type": [{ type: Schema.Types.ObjectId, ref: "Users" }],
-    ref: "Users"
   },
   "todos": {
     "type": [{ type: Schema.Types.ObjectId, ref: "Todos" }],
-    ref: "Todos"
   },
   owner: { type: Schema.Types.ObjectId, ref: "Users" }
 }, { timestamps: true })
