@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fancy Todo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/396f3f0150.js"></script>
+</head>
+
+<body>
+    <div id="placement">
+        <div class="row text-secondary">
+            <div class="col-4 d-flex align-items-center">
+                <h1>Fancy Todo</h1>
+            </div>
+            <div class="col-4 d-flex justify-content-center align-items-center">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-sort-amount-up"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-filter"></i></button>
+                </div>
+            </div>
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <div class="dropdown">
+                    <a class="dropdown-toggle text-decoration-none h3 text-secondary" href="#" role="button"
+                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User
+                    </a>
+
+                    <div class="dropdown-menu mr-5" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="card text-center" id="card-container">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <ul class="nav nav-tabs card-header-tabs mt-2">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="tab-todo" onclick="showTodos()">Todos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="tab-project" onclick="showProjects()">Projects</a>
+                    </li>
+                </ul>
+                <div class="dropdown  d-flex">
+                    <button class="btn btn-secondary group-project dropdown-toggle mr-4" type="button"
+                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter Projects
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Joined Projects</a>
+                        <a class="dropdown-item" href="#">Projects by Other Members</a>
+                    </div>
+                    <button id="new-project" class="btn btn-primary group-project">Create New Project</button>
+                    <button id="new-todo" class="btn btn-primary group-todo">Create New Todo</button>
+                </div>
+            </div>
+            <div class="card-body overflow-auto">
+                <div class="row group-todo" id="fill-todos">
+                    <div class="col-12 border-bottom pt-2">
+                        <div class="row align-items-center">
+                            <div class="col-1 pb-4">
+                                <input type="checkbox" class="big-checkbox">
+                            </div>
+                            <div class="col-11 d-flex flex-column align-items-start justify-content-center">
+                                <p class="text-truncate" style="max-width: 80vw;">
+                                    <strong>Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo
+                                        Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo
+                                        Title Todo Title Todo Title Todo Title Todo Title Todo
+                                        Title Todo Title Todo Title Todo Title Todo Title Todo</strong>
+                                </p>
+                                <p class="text-truncate" style="max-width: 80vw;">Todo description Todo description Todo
+                                    description Todo descriptionTodo description Todo descriptionTodo description Todo
+                                    description Todo description Todo descriptionTodo description Todo descriptionTodo
+                                    description Todo description Todo description Todo description Todo description Todo
+                                    description Todo description</p>
+                                <div class="d-flex">
+                                    <p class="mr-5 font-italic text-danger">Due Date</p>
+                                    <p class="mr-5 font-italic text-muted">Last Updated</p>
+                                    <p class="mr-5 font-italic text-muted">Created</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row group-project" id="fill-projects" style="display: none">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card d-flex flex-column align-items-stretch" style="min-height: 13rem">
+                            <div class="bg-yellow d-flex justify-content-center align-items-center flex-grow-1">
+                                <h5>Injoker Fan Club</h5>
+                            </div>
+                            <div class="flex-grow-1 row align-items-center px-3">
+                                <p class="col-6">Members:</p>
+                                <p class="col-6">Todos:</p>
+                                <p class="col-12">Started by:</p>
+                            </div>
+                            <div class="flex-grow-1 d-flex justify-content-center align-items-center px-3">
+                                <button class="btn btn-secondary btn-block">Join</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            showProjects()
+        })
+
+        function showTodos() {
+            $('#tab-todo').addClass('active')
+            $('#tab-project').removeClass('active')
+            $('.group-todo').show()
+            $('.group-project').hide()
+        }
+
+        function showProjects() {
+            $('#tab-project').addClass('active')
+            $('#tab-todo').removeClass('active')
+            $('.group-project').show()
+            $('.group-todo').hide()
+        }
+    </script>
+</body>
+
+</html>
