@@ -7,7 +7,7 @@ body {
     align-items: center; 
 }
 
-#placement {
+.placement {
     width: 90vw;
 }
 
