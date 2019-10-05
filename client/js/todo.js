@@ -6,12 +6,17 @@ function showCreateTodo() {
 }
 
 function closeEmptyCreateTodo() {
-    // https://quotes.rest/qod
     $('#create-todo').modal('hide')
     $('#create-todo-title').val('')
     $('#create-todo-description').val('')
     $('#create-todo-dueDate').val('')
-    axios.get()
+}
+
+function getQuotes() {
+    ajax.get('/api/quotes')
+        .then(({ data: { quote, author } }) => {
+            $('.quotes').text(`${quote} - ${author}`)
+        })
 }
 
 function createTodo() {
@@ -25,11 +30,9 @@ function createTodo() {
         description: $('#create-todo-description').val(),
         dueDate: $('#create-todo-dueDate').val()
     })
-        .then(() => {
-            $('#create-todo').modal('hide')
-            $('#create-todo-title').val('')
-            $('#create-todo-description').val('')
-            $('#create-todo-dueDate').val('')
+        .then(({ data: { title } }) => {
+            toastr.success(title, 'Success Create Todo')
+            closeEmptyCreateTodo()
             refreshTodos()
         }).catch(({ response: { data: error } }) => {
             Swal.fire({
