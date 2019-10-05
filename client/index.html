@@ -10,6 +10,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://kit.fontawesome.com/396f3f0150.js"></script>
+    <link rel="stylesheet" href="css/toastr.min.css">
 </head>
 
 <body>
@@ -61,44 +62,14 @@
                         </div>
                         <button id="new-project" class="btn btn-primary group-project" style="display: none">Create New
                             Project</button>
-                        <button id="new-todo" class="btn btn-primary group-todo" onclick="createTodo()">Create New
+                        <button id="new-todo" class="btn btn-primary group-todo" onclick="showCreateTodo()">Create New
                             Todo</button>
                     </div>
                 </div>
                 <div class="card-body overflow-auto">
-                    <div class="row group-todo" id="fill-todos">
-                        <div class="col-12 border-bottom pt-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 pb-4">
-                                    <input type="checkbox" class="big-checkbox">
-                                </div>
-                                <div class="col-11 d-flex flex-column align-items-start justify-content-center">
-                                    <p class="text-truncate" style="max-width: 80vw;">
-                                        <strong>Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo Title
-                                            Todo
-                                            Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo
-                                            Title Todo Title Todo Title Todo Title Todo Title Todo
-                                            Title Todo Title Todo Title Todo Title Todo Title Todo</strong>
-                                    </p>
-                                    <p class="text-truncate" style="max-width: 80vw;">Todo description Todo description
-                                        Todo
-                                        description Todo descriptionTodo description Todo descriptionTodo description
-                                        Todo
-                                        description Todo description Todo descriptionTodo description Todo
-                                        descriptionTodo
-                                        description Todo description Todo description Todo description Todo description
-                                        Todo
-                                        description Todo description</p>
-                                    <div class="d-flex">
-                                        <p class="mr-5 font-italic text-danger">Due Date</p>
-                                        <p class="mr-5 font-italic text-muted">Last Updated</p>
-                                        <p class="mr-5 font-italic text-muted">Created</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row group-todo overflow-auto" id="fill-todos">
                     </div>
-                    <div class="row group-project" id="fill-projects" style="display: none">
+                    <div class="row group-project overflow-auto" id="fill-projects" style="display: none">
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="card d-flex flex-column align-items-stretch" style="min-height: 13rem">
                                 <div class="bg-yellow d-flex justify-content-center align-items-center flex-grow-1">
@@ -220,8 +191,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form id="create-todo-form">
+                <form id="create-todo-form">
+                    <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
@@ -229,15 +200,15 @@
                                         <label for="create-todo-title">Title
                                         </label>
                                         <input class="form-control" type="text" name="create-todo-title"
-                                            id="create-todo-title" />
+                                            id="create-todo-title" placeholder="Enter title" />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="description">Description
                                         </label>
-                                        <textarea class="form-control" name="description" id="description" cols="30"
-                                            rows="5">
+                                        <textarea class="form-control" name="description" id="create-todo-description"
+                                            cols="30" rows="5" placeholder="Enter description">
                                     </textarea>
                                     </div>
                                 </div>
@@ -246,17 +217,17 @@
                                         <label for="dueDate">
                                             Due Date
                                         </label>
-                                        <input class="form-control" type="date" name="dueDate" id="dueDate">
+                                        <input class="form-control" type="date" name="dueDate" id="create-todo-dueDate">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Create</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -268,8 +239,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/toastr.min.js"></script>
     <script src="js/user.js"></script>
     <script src="js/todo.js"></script>
     <script src="js/todo-constructor.js"></script>
@@ -277,5 +250,9 @@
     <script>
     </script>
 </body>
+
+<style>
+
+</style>
 
 </html>

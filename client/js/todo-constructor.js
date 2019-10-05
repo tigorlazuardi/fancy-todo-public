@@ -1,27 +1,29 @@
-function makeTodo(title, description) {
-    return `<div class="col-12 border-bottom pt-2">
+function constructTodo({ title, description, _id, status, dueDate, createdAt, updatedAt }) {
+    return `<div class="col-12 border-bottom pt-2 ${status ? "bg-light" : ""}">
                 <div class="row align-items-center">
                     <div class="col-1 pb-4">
-                        <input type="checkbox" class="big-checkbox" id="exampleCheck1">
+                        <input type="checkbox" class="big-checkbox" id="${_id}" ${status ? "checked" : ""} onclick="updateStatus('${_id}')">
                     </div>
-                    <div class="col-11 d-flex flex-column align-items-start justify-content-center">
+                    <div class="col-11 d-flex flex-column align-items-start justify-content-center hover-todo rounded" onclick="detailTodo('${_id}')">
                         <p class="text-truncate" style="max-width: 80vw;">
-                            <strong>Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo
-                                Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo Title Todo
-                                Title Todo Title Todo Title Todo Title Todo Title Todo
-                                Title Todo Title Todo Title Todo Title Todo Title Todo</strong>
+                            <strong>${title}</strong>
                         </p>
-                        <p class="text-truncate" style="max-width: 80vw;">Todo description Todo description Todo
-                            description Todo descriptionTodo description Todo descriptionTodo description Todo
-                            description Todo description Todo descriptionTodo description Todo descriptionTodo
-                            description Todo description Todo description Todo description Todo description Todo
-                            description Todo description</p>
+                        <p class="text-truncate" style="max-width: 80vw;">${description ? description : "No Description."}</p>
                         <div class="d-flex">
-                            <p class="mr-5 font-italic text-danger">Due Date</p>
-                            <p class="mr-5 font-italic text-muted">Last Updated</p>
-                            <p class="mr-5 font-italic text-muted">Created</p>
+                            <p class="mr-5 font-italic text-danger">Due Date: ${moment(dueDate).fromNow()}</p>
+                            <p class="mr-5 font-italic text-muted">Last Updated: ${moment(updatedAt).fromNow()}</p>
+                            <p class="mr-5 font-italic text-muted">Created: ${moment(createdAt).fromNow()}</p>
                         </div>
                     </div>
                 </div>
             </div>`
 }
+
+function emptyTodo() {
+    return `
+    <div class="d-flex justify-content-center align-items-center" style="height: 100%; width: 100%;">
+        <h1>You have not made any todo yet :(</h1>
+    </div>
+    `
+}
+

@@ -9,7 +9,7 @@ function showContent() {
     $('#login-page').hide()
     $('#content').show()
     $('#user-control').text(localStorage.getItem('username'))
-    createTodo()
+    refreshTodos()
 }
 
 function checkLogin() {
@@ -98,7 +98,7 @@ function verifyUser() {
                     Swal.fire({
                         type: 'success',
                         title: 'User Verified',
-                        timer: 800,
+                        timer: 1000,
                         showConfirmButton: false
                     })
                     showContent()

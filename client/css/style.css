@@ -30,3 +30,8 @@ body {
 .bg-yellow {
     background: #ffed4b
 }
+
+.hover-todo:hover {
+        cursor: pointer;
+        background-color: #ffed4b2f;
+}
