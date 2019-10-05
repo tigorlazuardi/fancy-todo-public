@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { createToken } = require('../helpers/jwt')
+const { createToken, verifyUser } = require('../helpers/jwt')
 const { compare } = require('../helpers/bcryptjs')
 
 class UserController {
@@ -38,6 +38,15 @@ class UserController {
                 }
             })
             .catch(next);
+    }
+
+    static verify(req, res, next) {
+        try {
+            verifyUser(req.headers.token)
+            res.status(200).json({ message: "User Verified" })
+        } catch (err) {
+            next(err)
+        }
     }
 }
 
