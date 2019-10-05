@@ -18,8 +18,8 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: [true, 'Email required.'],
-        match: [/^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Invalid email format."],
+        required: [true, 'Email required'],
+        match: [/^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, "Invalid email format"],
         validate: {
             validator(value) {
                 return new Promise((resolve, reject) => {
@@ -31,8 +31,7 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: [true, 'Password required'],
-        minlength: [8, 'Password minimum length is 8 characters']
+        required: [true, 'Password required']
     }
 }, { timestamps: true })
 

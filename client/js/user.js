@@ -8,6 +8,8 @@ function showLogin() {
 function showContent() {
     $('#login-page').hide()
     $('#content').show()
+    console.log(localStorage.getItem('username'))
+    $('#user-control').text(localStorage.getItem('username'))
 }
 
 function checkLogin() {
@@ -76,9 +78,10 @@ function logout() {
             Swal.showLoading()
         }
     })
-
-    destroyCredentials()
-    Swal.close()
+    setTimeout(() => {
+        destroyCredentials()
+        Swal.close()
+    }, 500);
 }
 
 function verifyUser() {
@@ -89,7 +92,27 @@ function verifyUser() {
                 Swal.showLoading()
             }
         })
-        axios.get('/users/verify')
+        setTimeout(() => {
+            ajax.get('/users/verify')
+                .then(() => {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'User Verified',
+                        timer: 800,
+                        showConfirmButton: false
+                    })
+                    showContent()
+                }).catch(({ response: { data: error } }) => {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Failed Verifying User',
+                        text: error
+                    })
+                    showLogin()
+                    destroyCredentials()
+                });
+
+        }, 500);
     } else {
         destroyCredentials()
     }
@@ -102,4 +125,27 @@ function register() {
             Swal.showLoading()
         }
     })
+    ajax.post('/users/register', {
+        username: $('#register-username').val(),
+        email: $('#register-email').val(),
+        password: $('#register-password').val()
+    })
+        .then(({ data: { email, username, token } }) => {
+            localStorage.setItem('token', token)
+            localStorage.setItem('email', email)
+            localStorage.setItem('username', username)
+            showContent()
+            Swal.close()
+        }).catch(({ response: { data: error } }) => {
+            Swal.fire({
+                type: 'error',
+                title: 'Register Failed',
+                html: error.join('<br/>')
+            })
+        });
 }
+
+$('#register').on('submit', (e) => {
+    e.preventDefault()
+    register()
+})
