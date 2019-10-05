@@ -1,3 +1,3 @@
 function createTodo() {
-    $('#create-todo').modal(options)
+    $('#create-todo').modal()
 }

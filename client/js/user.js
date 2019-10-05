@@ -8,8 +8,8 @@ function showLogin() {
 function showContent() {
     $('#login-page').hide()
     $('#content').show()
-    console.log(localStorage.getItem('username'))
     $('#user-control').text(localStorage.getItem('username'))
+    createTodo()
 }
 
 function checkLogin() {
