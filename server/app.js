@@ -20,7 +20,7 @@ const express = require('express'),
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect(url + db + environment, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(url + db + environment, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {
         console.log("Connected to MongoDB " + db + environment)
     }).catch((err) => {

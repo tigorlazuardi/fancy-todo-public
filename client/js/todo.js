@@ -5,6 +5,48 @@ function showCreateTodo() {
     })
 }
 
+function showEditTodo(id, title, description, dueDate) {
+    const date = new Date(dueDate).toISOString().substr(0, 10)
+
+    $('#todo-id').text(id)
+    $('#edit-todo-title').val(title)
+    $('#edit-todo-description').val(description)
+    $('#edit-todo-dueDate').val(date)
+    $('#edit-todo').modal('show')
+    $('#edit-todo').on('shown.bs.modal', function () {
+        $('#edit-todo-title').trigger('focus')
+    })
+}
+
+$('#edit-todo-form').on('submit', (e) => {
+    e.preventDefault()
+    let id = $('#todo-id').text()
+    ajax.put(`todos/${id}`, {
+        title: $('#edit-todo-title').val(),
+        description: $('#edit-todo-description').val(),
+        dueDate: $('#edit-todo-dueDate').val()
+    })
+        .then(({ data: { title } }) => {
+            toastr.success(title, 'Success Edit Todo')
+            closeEmptyEditTodo()
+            refreshTodos()
+        }).catch(({ response: { date: error } }) => {
+            Swal.fire({
+                type: 'error',
+                title: 'Fail update todo',
+                html: error.join('<br/>')
+            })
+        });
+})
+
+function closeEmptyEditTodo() {
+    $('#edit-todo').modal('hide')
+    $('#todo-id').text('')
+    $('#edit-todo-title').val('')
+    $('#edit-todo-description').val('')
+    $('#edit-todo-dueDate').val('')
+}
+
 function closeEmptyCreateTodo() {
     $('#create-todo').modal('hide')
     $('#create-todo-title').val('')
@@ -41,6 +83,20 @@ function createTodo() {
                 html: error.join('<br/>'),
                 showConfirmButton: true
             })
+        });
+}
+
+function updateStatus(id, cond) {
+    ajax.patch(`/todos/${id}`, { status: cond })
+        .then(({ data: { title } }) => {
+            if (cond) {
+                toastr.success(`${title} has been marked completed.`)
+            } else {
+                toastr.info(`${title} completed status removed.`)
+            }
+            refreshTodos()
+        }).catch(({ response: { status, data: error } }) => {
+            toastr.error(error, `Error Code: ${status}`)
         });
 }
 

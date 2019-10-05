@@ -31,8 +31,8 @@ class TodoController {
 
     static update(req, res, next) {
         const todoId = req.params.todoId
-        const { title, description, status, dueDate } = req.body
-        Todo.findByIdAndUpdate(todoId, { $set: { title, description, status, dueDate } }, { runValidators: true, new: true })
+        const { title, description, dueDate } = req.body
+        Todo.findByIdAndUpdate(todoId, { $set: { title, description, dueDate } }, { runValidators: true, new: true })
             .then((Todo) => {
                 res.status(200).json(Todo)
             }).catch(next);

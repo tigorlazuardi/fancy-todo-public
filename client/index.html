@@ -179,7 +179,7 @@
 
 
 
-    <!-- MODAL -->
+    <!-- MODAL Register -->
 
     <div class="modal fade" id="create-todo" tabindex="-1" role="dialog" aria-labelledby="create-todo"
         aria-hidden="true">
@@ -230,6 +230,66 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Login -->
+
+    <div class="modal fade" id="edit-todo" tabindex="-1" role="dialog" aria-labelledby="edit-todo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="edit-todo-form">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12" style="display: none">
+                                    <span class="mr-2 text-muted font-italic">id:</span>
+                                    <span class="text-muted font-italic" id="todo-id"></span>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="edit-todo-title">Title
+                                        </label>
+                                        <input class="form-control" type="text" name="edit-todo-title"
+                                            id="edit-todo-title" placeholder="Enter title" />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="description">Description
+                                        </label>
+                                        <textarea class="form-control" name="description" id="edit-todo-description"
+                                            cols="30" rows="5" placeholder="Enter description">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="dueDate">
+                                            Due Date
+                                        </label>
+                                        <input class="form-control" type="date" name="dueDate" id="edit-todo-dueDate">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <h6 class="text-justify text-muted px-5 font-italic quotes">
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                 </form>
             </div>
